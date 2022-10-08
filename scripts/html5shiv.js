@@ -1,4 +1,4 @@
-;(function(window, document) {
+function(window, document) {
 
   /** Preset options */
   var options = window.html5 || {};
