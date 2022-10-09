@@ -1,5 +1,4 @@
 //aaa
-
 function(window, document) {
 
   /** Preset options */
