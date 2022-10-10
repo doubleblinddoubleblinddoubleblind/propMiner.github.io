@@ -1,17 +1,3 @@
-urlOnlineDomain='https://doubleblinddoubleblind.github.io/propMiner.github.io/'
-async function downloadFile(urlFile) {
-	let response = await fetch(urlFile);
-
-	if(response.status != 200) {
-		throw new Error("Server Error");
-	}
-
-	// read response stream as text
-	let text_data = await response.text();
-    // console.log(text_data);
-	return text_data;
-}
-
 let arrTexts=[]
 let arrP1s=[]
 let arrRealIds=[]
@@ -39,8 +25,9 @@ function showCaseWon(){
     var optionWon = selectWon.options[selectWon.selectedIndex];
     currentIndexQuery=optionWon.value;
 
-    document.getElementById('iframeResult').src=urlOnlineDomain+'dataPropMiner/cose_print/'+currentIndexQuery+'.txt';
-    document.getElementById('linkViewTree').href=urlOnlineDomain+'dataPropMiner/cose_html/'+currentIndexQuery+'.html';
+//    document.getElementById('iframeResult').src=urlOnlineDomain+'dataPropMiner/cose_print/'+currentIndexQuery+'.txt';
+    document.getElementById('txtSearchResult').value=dictSearchResults[currentIndexQuery]['content'];
+    document.getElementById('linkViewTree').href='viewTreeCose.html?cacheid='+currentIndexQuery;
     // document.getElementById('iframeResult').setStyles({ 'overflow': 'auto' });
     document.getElementById('txtInputQuery').value=optionWon.text;
     // promiseResult.then(document.getElementById('iframeResult').value)
@@ -58,8 +45,9 @@ function showCaseLost(){
     var optionLost = selectLost.options[selectLost.selectedIndex];
     currentIndexQuery=optionLost.value;
 
-    document.getElementById('iframeResult').src=urlOnlineDomain+'dataPropMiner/cose_print/'+currentIndexQuery+'.txt';
-    document.getElementById('linkViewTree').href=urlOnlineDomain+'dataPropMiner/cose_html/'+currentIndexQuery+'.html';
+//    document.getElementById('iframeResult').src=urlOnlineDomain+'dataPropMiner/cose_print/'+currentIndexQuery+'.txt';
+    document.getElementById('txtSearchResult').value=dictSearchResults[currentIndexQuery]['content'];
+    document.getElementById('linkViewTree').href='viewTreeCose.html?cacheid='+currentIndexQuery;
     // document.getElementById('iframeResult').setStyles({ 'overflow': 'auto' });
     document.getElementById('txtInputQuery').value=optionLost.text;
     // promiseResult.then(document.getElementById('iframeResult').value)
@@ -76,10 +64,11 @@ function performSearch(){
             currentIndexQuery=index;
         }
     }
-    document.getElementById('iframeResult').src=urlOnlineDomain+'dataPropMiner/cose_print/'+currentIndexQuery+'.txt';
-    document.getElementById('linkViewTree').href=urlOnlineDomain+'dataPropMiner/cose_html/'+currentIndexQuery+'.html';
+//    document.getElementById('iframeResult').src=urlOnlineDomain+'dataPropMiner/cose_print/'+currentIndexQuery+'.txt';
+    document.getElementById('txtSearchResult').value=dictSearchResults[currentIndexQuery]['content'];
+    document.getElementById('linkViewTree').href='viewTreeCose.html?cacheid='+currentIndexQuery;
     // document.getElementById('iframeResult').setStyles({ 'overflow': 'auto' });
-    // document.getElementById('txtInputQuery').value=optionLost.text;
+
 
 }
 
@@ -155,8 +144,10 @@ function loadBody2(){
     // txtResultGuide
     strDisplayInstruction="Query and best candidates' information\nResults in Top-K";
     strDisplayInstruction+="\nStep 1 (get nl-pl embbedding (like GraphCodeBERT) of query and candidates with dimensions = 768)"
+    strDisplayInstruction+="\nStep 2. PropMiner's properties extraction for query"
     strDisplayInstruction+="\nStep 2.1. (Get tree representation of query - Natural Language Parse Tree)"
     strDisplayInstruction+="\nStep 2.2. (Get expected properties from tree representation of query)"
+    strDisplayInstruction+="\nStep 3. PropMiner's properties prediction for candidates"
     strDisplayInstruction+="\nStep 3.1. (Get fastText representation of candidates - dimensions = 100 )"
     strDisplayInstruction+="\nStep 3.2. (PropMiner predict properties - dimensions = 15)"
     strDisplayInstruction+="\nStep 4. (Augment nl-pl embedding of query with expected properties; Augment nl-pl embedding of candidates with predicted properties; Compare by euclid distance)";
